@@ -8,10 +8,14 @@ M = reshape(u(n+1:n+(n/2)^2),[n/2 n/2]);
 C = reshape(u(n+(n/2)^2+1:n+2*(n/2)^2),[n/2 n/2]);
 K = u(n+2*(n/2)^2+1:n+2*(n/2)^2+(n/2));
 U = u(n+2*(n/2)^2+(n/2)+1:n+2*(n/2)^2+(n/2)+4);
+I_Q = diag(u(n+2*(n/2)^2+(n/2)+5:n+2*(n/2)^2+(n/2)+7));
 
 phi_Q   = x(4);
 theta_Q = x(5);
 psi_Q   = x(6);
+phi_Q_dot = x_dot(4);
+theta_Q_dot = x_dot(4);
+psi_Q_dot = x_dot(4);
 
 rotX = [1       0          0;
     0 cos(phi_Q) -sin(phi_Q);
@@ -25,12 +29,14 @@ rotZ = [cos(psi_Q) -sin(psi_Q) 0;
 R_IB = rotZ*rotY*rotX;                  %multi-rotor rotation matrix (coordinate I->B: x_Q_I = R_Q_IB*x_Q_B)
 
 input_transform_thrust = R_IB*[0 0 U(1)].';
-% input_transform_moment = U(2:4);
-input_transform_moment = [1             sin(phi_Q)*tan(theta_Q)  cos(phi_Q)*tan(theta_Q);
-                          cos(phi_Q)    0                       -sin(phi_Q);
-                          0             sin(phi_Q)*sec(theta_Q)  cos(phi_Q)*sec(theta_Q)]*U(2:4);
+input_transform_moment = R_IB*U(2:4);
+
+% input_transform_moment = [1             sin(phi_Q)*tan(theta_Q)  cos(phi_Q)*tan(theta_Q);
+%                           cos(phi_Q)    0                       -sin(phi_Q);
+%                           0             sin(phi_Q)*sec(theta_Q)  cos(phi_Q)*sec(theta_Q)]*U(2:4);
 %TODO: acceleration relationship must be comptued in detail
                       
+% y = M\([input_transform_thrust; rpy_ddot; 0; 0] - C*x_dot - K);
 y = M\([input_transform_thrust; input_transform_moment; 0; 0] - C*x_dot - K);
 if(sum(isnan(y))==n/2)
    y = zeros(n/2,1); 

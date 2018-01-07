@@ -17,8 +17,8 @@ xyz_dot_error = xyz_dot_des - xyz_dot_now;
 
 maxThrust = -2*(m_Q+m_L)*g;
 minThrust = -0.1*(m_Q+m_L)*g;
-K_p = diag([3 3 7]);
-K_d = diag([0.3 0.3 2.7]);
+K_p = diag([0.09 0.09 7]);
+K_d = diag([0.2 0.2 2.7]);
 % yaw_control = true;    %Yaw is controlled to see the deisred direction
 yaw_control = false;   %Yaw is maintained constantly
 maxRollPitch = deg2rad(30);
@@ -33,11 +33,11 @@ psi_now = x_now(6);
 rollPitch_des = [ cos(psi_now) sin(psi_now);
                  -sin(psi_now) cos(psi_now)]*[acceleration_des(2); -acceleration_des(1)];
 for i=1:2
-%     if(rollPitch_des(i) > maxRollPitch)
-%         rollPitch_des(i) = maxRollPitch;
-%     elseif(rollPitch_des(i) < -maxRollPitch)
-%         rollPitch_des(i) = -maxRollPitch;
-%     end
+    if(rollPitch_des(i) > maxRollPitch)
+        rollPitch_des(i) = maxRollPitch;
+    elseif(rollPitch_des(i) < -maxRollPitch)
+        rollPitch_des(i) = -maxRollPitch;
+    end
     if(isnan(rollPitch_des(i)))
         rollPitch_des(i) = 0;
     end
