@@ -28,8 +28,11 @@ rotZ = [cos(psi_Q) -sin(psi_Q) 0;
     0         0 1];
 R_IB = rotZ*rotY*rotX;                  %multi-rotor rotation matrix (coordinate I->B: x_Q_I = R_Q_IB*x_Q_B)
 
+T = [1 0 -sin(theta_Q);
+     0 cos(phi_Q) sin(phi_Q)*cos(theta_Q);
+     0 -sin(phi_Q) cos(phi_Q)];
 input_transform_thrust = R_IB*[0 0 U(1)].';
-input_transform_moment = R_IB*U(2:4);
+input_transform_moment = T*U(2:4);
 
 % input_transform_moment = [1             sin(phi_Q)*tan(theta_Q)  cos(phi_Q)*tan(theta_Q);
 %                           cos(phi_Q)    0                       -sin(phi_Q);

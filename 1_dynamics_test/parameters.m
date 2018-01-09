@@ -5,7 +5,7 @@ m = 4;                    %Number of the input
 g = 9.81;                 %Gravitational accelerational of Earth
 
 m_Q = 1.0;                %Mass of the multi-rotor
-m_L = 0.1;                %Mass of the load
+m_L = 0.3;                %Mass of the load
 l_L = 1.0;                %Length of the cable
 
 Ix = 0.03;                 %Moments of inertia of the multi-rotor
@@ -19,9 +19,9 @@ p_S_B(2) = 0.05;
 p_S_B(3) = 0.2;
 
 x0 = zeros(n,1);          %Initial state
-x0(8) = deg2rad(30);
+% x0(8) = deg2rad(30);
 x0_position = x0(1:n/2);
 x0_velocity = x0(n/2+1:n);
 
 xf = zeros(n,1);          %Final desired state
-xf(1:3,1) = [0 0 0].';
+xf(1:3,1) = [2 0 0].';

@@ -18,10 +18,10 @@ vid.Quality = 50;
 vid.FrameRate = 1/dt/step;
 open(vid);
 
-loadSize = 0.2;
+loadSize = 0.1;
 suspensionColor = [0 0 1];
 cableColor = [0 0 0];
-loadColor = [1 0 0];
+loadColor = [0.1 0.1 0.1];
 
 figure(111);
 set(gcf,'Color',[1 1 1]);

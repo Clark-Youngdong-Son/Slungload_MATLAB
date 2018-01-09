@@ -63,4 +63,4 @@ for i=1:4
 end
 xlabel('time(s)');
 
-autoArrangeFigures(2,2,2);
+autoArrangeFigures(2,2,1);
